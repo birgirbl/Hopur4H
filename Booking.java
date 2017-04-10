@@ -1,39 +1,66 @@
-public class Booking{
+import java.util.Date;
 
-private String HotelName;
-private String room;
-private Traveler traveler; 
-private Date dateFrom;
-private Date dateTo; 
+public class Booking {
 
-public String getHotelName { 
-return HotelName; 
-}
-public void setHotelName(String HotelName){
- this.HotelName=HotelName;
-}
-public String getRoom(){
- return room;
-}
-public void setRoom(String room)
-{
- this.room=room;
-}
-public Traveler getTraveler(){
- return traveler;
-}
-public Date getDateFrom() { 
-return dateFrom; 
-}
-public void setDateFrom(Date DateFrom){
- this.dateFrom=dateFrom;
-}
-public Date getDateTo(){
- return dateTo;
-}
-public void setDateTo(Date dateTo){
- this.dateTo=dateTo;
-}
-//smidur skrifa inn
-//Booking(hotelName:String, room:String, traveler:Traveler, dateFrom:Date, dateTo:Date)
+	private Hotel hotel;
+	private Date dateFrom;
+	private Date dateTo;
+	private Room room;
+	private Traveler traveler;
+	
+	public Hotel getHotel(){
+		return hotel;
+	}
+	
+	public void setHotel(Hotel hotel){
+		this.hotel = hotel;
+	}
+	
+	public Room getRoom(){
+		return room;
+	}
+	
+	public void setRoom(Room room){
+		this.room = room;
+	}
+	
+	public Traveler getTraveler(){
+		return traveler;
+	}
+	
+	public void setTraveler(Traveler traveler){
+		this.traveler = traveler;
+	}
+	
+	public Date getDateFrom(){
+		return dateFrom;
+	}
+	
+	public void setDateFrom(Date dateFrom){
+		this.dateFrom = dateFrom;
+	}
+	
+	public Date getDateTo(){
+		return dateTo;
+	}
+	
+	public void setDateTo(Date dateTo){
+		this.dateTo = dateTo;
+	}
+	
+	public String toString(){
+			return hotel.getHotelName()  + " | " + dateFrom + "-" + dateTo + " | " + room.getRoomType() + " | " + traveler.getName();
+		}
+	
+// Smidur
+	
+	public Booking(Hotel hotel, Traveler traveler, Date dateFrom, Date dateTo){
+	this.hotel = hotel;
+	this.traveler = traveler;
+	this.dateFrom = dateFrom;
+	this.dateTo = dateTo;
+	
+
+	}
+	
 }
