@@ -6,14 +6,16 @@ import java.util.List;
 public class HotelController {
 	private HotelStorage hotelStorage;
 	private List<Hotel> hotelListi;
+	private List<Hotel> originalList;
 	
 	public HotelController() {
 		hotelStorage = new HotelStorage();
-		hotelListi = hotelStorage.getHotelListi();
 	}
 	
 	public void search(String leitarord) {
 		hotelStorage.getHotelFromDatabase(leitarord);
+		originalList = hotelStorage.getHotelListi();
+		hotelListi = new ArrayList<Hotel>(originalList);
 	}
 	
 	public void displayResults(){
@@ -22,10 +24,12 @@ public class HotelController {
 		if(hotelListi.size() == 0) {
 			System.out.println("Engar niðurstöður fundust");
 		}
-		int count = 0;
+		System.out.println("Hótel\tStaðsetning\tStjörnur");
 		for(int i=0; i<hotelListi.size(); i++) {
 			String hotelNafn = hotelListi.get(i).getHotelName();
-			System.out.println(hotelNafn);
+			String hotelLocation = hotelListi.get(i).getLocation();
+			int quality = hotelListi.get(i).getQuality();
+			System.out.println(hotelNafn + "\t" + hotelLocation + "\t" + quality);
 		}
 	}
 	
@@ -36,29 +40,31 @@ public class HotelController {
 				for(Review x : reviewListi) {
 					System.out.println(x.toString());
 				}
-				
 			}
 		}
 	}
 	
 	public void filter(String filter, int tala) {
-		String[] hotel = new String[hotelListi.size()];
-		int count = 0;
+		hotelListi = new ArrayList<Hotel>();
 		if(filter.toLowerCase().equals("price")) {
-			for(int i=0; i<hotelListi.size(); i++) {
-				List<Room> roomList = hotelListi.get(i).getRooms();
+			for(int i=0; i<originalList.size(); i++) {
+				List<Room> roomList = originalList.get(i).getRooms();
 				if(priceFilter(roomList, tala)) {
-					System.out.println(hotelListi.get(i).getHotelName());
+					hotelListi.add(originalList.get(i));
 				}
 			}
 		}
 		if(filter.toLowerCase().equals("quality")) {
-			for(int i=0; i<hotelListi.size(); i++) {
-				if(hotelListi.get(i).getQuality() <= tala) {
-					System.out.println(hotelListi.get(i).getHotelName());
+			for(int i=0; i<originalList.size(); i++) {
+				if(originalList.get(i).getQuality() <= tala) {
+					hotelListi.add(originalList.get(i));
 				}
 			}
 		}
+	}
+	
+	public void getReviews(Hotel hotel) {
+		hotelStorage.getReviewsFromDatabase(hotel);
 	}
 	
 	public boolean priceFilter(List<Room> roomList, int tala) {
@@ -124,8 +130,9 @@ public class HotelController {
 	
 	public static void main(String[] args) {
 		HotelController hotelController = new HotelController();
-		hotelController.sort("quality", "descending");
+		hotelController.search("Icelandair");
+		hotelController.filter("price", 30000);
+		hotelController.sort("quality","descending");
 		hotelController.displayResults();
-		//hotelController.filter("quality", 4);
 	}
 }
