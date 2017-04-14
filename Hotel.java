@@ -30,11 +30,11 @@ public class Hotel{
 		return quality;
 	}
 	
-	public void setPic(Picture picture){
-		this.picture=picture;
+	public void setPicture(String image){
+		picture = new Picture(image);
 	}
 	
-	public Picture getPic(){
+	public Picture getPicture(){
 		return picture;
 	}
 	public void setRoom(String roomType,int price){

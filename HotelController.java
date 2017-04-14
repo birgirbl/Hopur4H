@@ -1,11 +1,12 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 public class HotelController {
 	private HotelStorage hotelStorage;
-	private List<Hotel> hotelListi;
+	private ArrayList<Hotel> hotelListi;
 	private List<Hotel> originalList;
 	
 	public HotelController() {
@@ -18,9 +19,11 @@ public class HotelController {
 		hotelListi = new ArrayList<Hotel>(originalList);
 	}
 	
-	public void displayResults(){
-		String[] hotel = new String[hotelListi.size()];
-		
+	public ArrayList<Hotel> getHotelList() {
+		return hotelListi;
+	}
+	
+	public void displayResults(){		
 		if(hotelListi.size() == 0) {
 			System.out.println("Engar niðurstöður fundust");
 		}
@@ -29,19 +32,26 @@ public class HotelController {
 			String hotelNafn = hotelListi.get(i).getHotelName();
 			String hotelLocation = hotelListi.get(i).getLocation();
 			int quality = hotelListi.get(i).getQuality();
-			System.out.println(hotelNafn + "\t" + hotelLocation + "\t" + quality);
+			System.out.println(i+1 + "\t" + hotelNafn + "\t" + hotelLocation + "\t" + quality);
 		}
 	}
 	
-	public void displayReviews(String hotelName) {
-		for(int i=0; i<hotelListi.size(); i++) {
-			if(hotelListi.get(i).getHotelName().equals(hotelName)) {
-				List<Review> reviewListi = hotelListi.get(i).getReview();
+	public void displayReviews(Hotel hotel) {
+
+				List<Review> reviewListi = hotel.getReview();
 				for(Review x : reviewListi) {
-					System.out.println(x.toString());
+					System.out.println("Name: " + x.getName() + "\nDate: " + x.getDate() + "\nReview Text: " + x.getReviewText());
 				}
-			}
-		}
+
+	}
+	
+	public void displayRooms(Hotel hotel) {
+
+				List<Room> roomListi = hotel.getRooms();
+				for(Room x : roomListi) {
+					System.out.println(x.getRoomType());
+				}
+
 	}
 	
 	public void filter(String filter, int tala) {

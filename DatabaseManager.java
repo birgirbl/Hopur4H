@@ -21,6 +21,12 @@ public class DatabaseManager {
 		b.setRoom("Fjölskylduherbergi", 15000);
 		hotelResults.add(a);
 		hotelResults.add(b);
+		Traveler tinna = new Traveler("1981275", "Tinna");
+		Traveler birgir = new Traveler("120528", "Birgir");
+		a.setReview(tinna, "mjög fínt");
+		a.setReview(birgir, "Jájá, allt í lagi");
+		Traveler einar = new Traveler("12056668", "Einar");
+		b.setReview(einar, "flott");
 		//results.add(c);
 		//results.add(d);
 		return hotelResults;
